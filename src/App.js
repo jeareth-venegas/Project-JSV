@@ -15,8 +15,7 @@ class App extends React.Component {
       id: 0,
       name: ''
     }
-    // this.handleIdChange = this.handleIdChange.bind(this);
-    // this.handleNameChange = this.handleNameChange.bind(this);
+    
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -40,17 +39,33 @@ class App extends React.Component {
     const id = this.state.id
     const name = this.state.name
     event.preventDefault()
-    const students = [...this.state.students, {"id": id, "name": name}]
-    this.setState({students: students})
+    // const students = [...this.state.students, {"id": id, "name": name}]
+    const newStudent = [...this.state.students, {
+      "id": id, 
+      "name": name
+    }]
+    //limpiar input
+    this.setState({
+      id: '',
+      name: ''
+    })
+    //recorre el [i] para validar el id
+    for(let i = 0; i < this.state.students.length; i++) {
+      if(Number(id) === this.state.students[i].id){
+        alert('El ID que añadió ya existe👀');
+      }
+    }
+    this.setState({students: newStudent})
+    // para que no entre un id vacío o con 0
+    if(id === 0 || id === ''){
+      alert('Proporciona un ID válido, por favor🥺');
+    }
+    //para que no entre un nombre vacío
+    if(name === ''){
+      alert('Proporciona un nombre válido, por favor🥺');
+    }
   }
 
-  // handleIdChange(event) {
-  //   this.setState({id: event.target.value});  
-  // }
-
-  // handleNameChange(event) {
-  //   this.setState({name: event.target.value});  
-  // }
 
   handleChange(event) {
     this.setState({
@@ -70,7 +85,7 @@ class App extends React.Component {
           <button type="submit" value="submit">Add student</button>
         </form>
         
-        {!isLoaded ? <p>loading...</p> : <List students={students} hoverable/>}
+        {!isLoaded ? <p>Loading...</p> : <List students={students} hoverable/>}
         <Footer />
       </Layout>
     );
