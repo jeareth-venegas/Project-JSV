@@ -21,8 +21,7 @@ export default function App() {
         <Route path="/addStudent" element={<StudentForm />} />
         <Route path="/student/:StudentId" element={<Student />} />
       </Routes>
+      <Footer/>
     </Layout>
       )}
-      
 
-export default App;
